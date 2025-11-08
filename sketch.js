@@ -26,38 +26,37 @@ function draw() {
   translate(width / 2, height / 2);
 
   for (let i = particles.length - 1; i >= 0; i--) {
-    let p = particles[i];
-    p.update();
-    p.display();
-    p.checkOutOfCanvas();
+    particles[i].update();
+    particles[i].display();
+    particles[i].checkOutOfCanvas();
 
-    if (p.isDone) {
+    if (particles[i].isDone) {
       particles.splice(i, 1);
       particles.push(new Particle());
     }
   }
 
   for (let i = bubbles.length - 1; i >= 0; i--) {
-    let b = bubbles[i];
-    b.update();
-    b.display();
-    b.checkOutOfCanvas();
+    bubbles[i].update();
+    bubbles[i].display();
+    bubbles[i].checkOutOfCanvas();
 
-    if (b.isDone) {
+    if (bubbles[i].isDone) {
       bubbles.splice(i, 1);
       bubbles.push(new Bubble());
     }
   }
 
-  for (let b of bubbles) {
-    for (let p of particles) {
-      let d = dist(b.x, b.y, p.x, p.y);
-      if (d < 20) {
-        b.x += (b.x - p.x) * 0.05;
-        b.y += (b.y - p.y) * 0.05;
-      }
+  for (let i = 0; i < bubbles.length; i++) {
+  for (let j = 0; j < particles.length; j++) {
+    let d = dist(bubbles[i].x, bubbles[i].y, particles[j].x, particles[j].y);
+    if (d < 20) {
+      bubbles[i].x += (bubbles[i].x - particles[j].x) * 0.05;
+      bubbles[i].y += (bubbles[i].y - particles[j].y) * 0.05;
     }
   }
+}
+
 }
 
 
